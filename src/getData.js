@@ -124,12 +124,21 @@ export const getCoffeeDetail = async () => {
         )
       );
 
+      let i = 0;
+      const temp = [];
       for (let ktem of lis) {
+        i += 1;
+        if (!(i % 5)) {
+          details.nutral.push(temp);
+        }
         const dt = await ktem.findElement(By.css("dt"));
         const dd = await ktem.findElement(By.css("dd"));
+
         const key = await dt.getText();
         const value = await dd.getText();
-        details.nutral.push({ key, value });
+
+        if (!key.length) continue;
+        temp.push({ key, value });
       }
     }
     const detailJson = JSON.stringify(details);
